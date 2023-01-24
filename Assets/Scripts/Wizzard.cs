@@ -14,26 +14,23 @@ public class Wizzard : MonoBehaviour
     //[SerializeField] private bool isGround;
     [SerializeField] private bool triggerToDamage;
     [SerializeField] private int skullScore;
-    [SerializeField] private Transform player;
     [SerializeField] private float maxHealth;
     [SerializeField] private float wizzardHealth;
-    [SerializeField] HealthBar healthBar;
-    public static float healthSend;
-    
     [SerializeField] private float damage;
+    [SerializeField] private float fireballRotationOffset;
     [SerializeField] Vector3 position;
+    [SerializeField] HealthBar healthBar;
+    [SerializeField] private Transform player;
     [SerializeField] private Rigidbody2D playerRB;
     [SerializeField]private TMP_Text skullScoreText;
     [SerializeField]private TMP_Text Text;
     [SerializeField] private CapsuleCollider2D banditCollider;
     [SerializeField] private CapsuleCollider2D playerCollider;
-    
+    [SerializeField] private GameObject fireballPrefab;
+    public static float healthSend;
     private Animator wizzardAnimator;
     private SpriteRenderer spriteRend;
-    
     public static Transform wizzardPSN;
-    
-    
     
     void Start()
     {
@@ -43,18 +40,17 @@ public class Wizzard : MonoBehaviour
         banditCollider = gameObject.GetComponentInChildren<CapsuleCollider2D>();
         playerCollider = gameObject.GetComponentInChildren<CapsuleCollider2D>();
         healthSend = maxHealth;
-        skullScore = DataHolder.QttyOfSkulls;
-        
     }
 
-    // Update is called once per frame
+    private void Awake() 
+    {
+        skullScore = DataHolder.QttyOfSkulls;
+    }
+
     void Update()
     {
-        if(Enemy.triggerToAttackSend == true)
-        {
+        
         healthBar.SetHealth(healthSend, maxHealth);
-
-        }
         
         wizzardHealth = healthSend;
         wizzardPSN = gameObject.transform;
@@ -63,6 +59,10 @@ public class Wizzard : MonoBehaviour
     {
         Escape();
     }
+     if(Input.GetKeyDown("r"))
+        {             
+            ShootFireBall();
+        }
     // ======FOR JUMP=======
 
         //if (Input.GetKeyDown("space"))
@@ -74,11 +74,11 @@ public class Wizzard : MonoBehaviour
    
     void FixedUpdate()
     {
-        //Navigation
+        //===============Navigation===========
         position = transform.position;
         
 
-        //Moution
+        //==============Moution==============
         position.x += Input.GetAxis("Horizontal") * speedForce;
         transform.position = position;
 
@@ -96,7 +96,7 @@ public class Wizzard : MonoBehaviour
         {
             wizzardAnimator.SetInteger("state", 0);
         }
-        // Attack
+        // ===============Attack=============
         if(Input.GetKey("space"))
         {
             Attack();
@@ -105,14 +105,6 @@ public class Wizzard : MonoBehaviour
         {
         wizzardAnimator.SetBool("attack", false);
         }
-        
-        if(triggerToDamage && Input.GetKey("space"))
-        {
-             
-            //Debug.Log("Wizzard Attack Working!");
-
-        }
-
     }
     // ======FOR JUMP=======
 
@@ -133,6 +125,7 @@ public class Wizzard : MonoBehaviour
     //        isGround = true;
     //    }
     // }
+
     // ======TRIGGER TO DAMAGE  ENEMY=======
     private void OnTriggerStay2D(Collider2D collision) 
     {  
@@ -174,10 +167,14 @@ public class Wizzard : MonoBehaviour
     {
             wizzardAnimator.SetBool("attack", true);
     }
+    private void ShootFireBall()
+    {
+        var fireballRotation = new Quaternion (transform.rotation.x, transform.rotation.y, transform.rotation.z + fireballRotationOffset, transform.rotation.w);
+        Instantiate(fireballPrefab, transform.position, fireballRotation);
+    }
     public void WizzardTakeDamage(float takingDamage)
     {
         healthSend = healthSend - takingDamage;
-        
     }
     private void Escape()
     {

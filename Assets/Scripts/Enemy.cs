@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     [Header ("Attack Parameters")]
     [SerializeField] private float attackCoolDown;
     [SerializeField] private bool changeAttack;
-    
     [SerializeField] private bool triggerToAttackWizzard;
     [SerializeField] private bool triggerToAttackBandit;
     public static bool triggerToAttackSend;
@@ -95,8 +94,8 @@ public class Enemy : MonoBehaviour
             {
             anim.SetTrigger("die");
             }
-        //When Attack Blue
-        
+
+    // =============When Attack Blue==============
     }
     private void OnTriggerStay2D(Collider2D collision) 
     {

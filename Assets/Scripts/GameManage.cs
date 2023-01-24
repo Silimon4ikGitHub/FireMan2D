@@ -5,16 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManage : MonoBehaviour
 
-
 {
-    
-    
-    void Start()
-    {
-        
-    }
-
-    
     void Update()
     {
         if (Wizzard.healthSend <= 0)
@@ -23,11 +14,7 @@ public class GameManage : MonoBehaviour
         }
     }
     private void RestartGame()
-    {
-        
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        
-
+    { 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -5,20 +5,13 @@ using UnityEngine;
 public class Level2Start : MonoBehaviour
 {
     [SerializeField] private GameObject banditPrefab;
+    [SerializeField] private Wizzard wizzardScript;
+    [SerializeField] private Vector3 offset;
     
-    // Start is called before the first frame update
     void Start()
     {
-        
-        for (int i = 0; i < 2; i ++)
-        {
         Instantiate(banditPrefab, transform.position, transform.rotation);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instantiate(banditPrefab, transform.position + offset, transform.rotation);
+        wizzardScript.AddSkull(10);
     }
 }

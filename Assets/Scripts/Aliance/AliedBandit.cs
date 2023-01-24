@@ -9,10 +9,10 @@ public class AliedBandit : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float attackCoolDown;
     [SerializeField] private bool triggerToAttack;
-    public static bool triggerToAttackToSend;
-    private float coolDownTimer;
     [SerializeField] private Animator banditAnimator;
     [SerializeField] private Enemy CurrentEnemyScript;
+    public static bool triggerToAttackToSend;
+    private float coolDownTimer;
     
     
 
@@ -29,7 +29,7 @@ public class AliedBandit : MonoBehaviour
     void Update()
     {
         triggerToAttackToSend = triggerToAttack;
-        // Timer for Attack Cooldown
+        // ===============Timer for Attack Cooldown============
         coolDownTimer += Time.deltaTime;
         
         if (banditHealth <= 0)
@@ -38,7 +38,7 @@ public class AliedBandit : MonoBehaviour
 
         }
         
-        //Attack
+        //==============Attack==============
         if (triggerToAttack == true && coolDownTimer >= attackCoolDown)
         {
             banditAnimator.SetTrigger("Attack");
@@ -81,12 +81,12 @@ public class AliedBandit : MonoBehaviour
 
     public void BanditLeave()
     {
+        DataHolder.QttyOfBandits ++;
         Destroy(gameObject);
     }
     
     public void ColliderOff()
     {
- 
         CapsuleCollider2D caps = GetComponentInChildren<CapsuleCollider2D>();
         caps.enabled = false;
     }
